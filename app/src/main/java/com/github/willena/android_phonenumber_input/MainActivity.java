@@ -3,6 +3,7 @@ package com.github.willena.android_phonenumber_input;
 import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.github.willena.phoneinputview.PhoneInputView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onValidEntry(Boolean valid) {
                 b.setEnabled(valid);
+                Log.d("MAINACTIVITY", "onValidEntry: " + phoneView.getFormatedNumber());
             }
         });
     }

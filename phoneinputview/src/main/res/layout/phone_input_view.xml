@@ -11,18 +11,17 @@
         android:layout_height="match_parent" />
 
 
-
-        <com.github.willena.phoneinputview.ClearableEditText
-            android:id="@+id/phone_input_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="2.18"
-            android:digits="0123456789-() "
-            android:ems="10"
-            android:inputType="phone"
-            app:errorEnabled="true"/>
+    <com.github.willena.phoneinputview.ClearableEditText
+        android:id="@+id/phone_input_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="2.18"
+        android:digits="0123456789-() "
+        android:ems="10"
+        android:inputType="phone"
+        app:errorEnabled="true" />
 
 </LinearLayout>
 
