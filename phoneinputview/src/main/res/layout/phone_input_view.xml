@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Spinner
+        android:id="@+id/phone_input_country_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+
+
+        <com.github.willena.phoneinputview.ClearableEditText
+            android:id="@+id/phone_input_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="2.18"
+            android:digits="0123456789-() "
+            android:ems="10"
+            android:inputType="phone"
+            app:errorEnabled="true"/>
+
+</LinearLayout>
+
+

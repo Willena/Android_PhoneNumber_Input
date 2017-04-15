@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/fr_"
+        android:id="@+id/phone_input_spinner_item_flag"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/phone_input_spinner_item_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="3dp"
+        android:text="FR"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/secondary_text_dark_nodisable"
+        android:text="(+33)"
+        android:id="@+id/phone_input_spinner_item_dialcode"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="4dp"
+        android:textSize="20sp"
+        android:layout_marginRight="4dp" />
+
+</LinearLayout>
