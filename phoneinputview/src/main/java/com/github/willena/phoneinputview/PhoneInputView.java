@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.github.willena.phoneinputview.events.OnCountryChangeListener;
+import com.github.willena.phoneinputview.events.OnCountryChangedListener;
 import com.github.willena.phoneinputview.events.OnValidEntryListener;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -31,7 +31,7 @@ public class PhoneInputView extends LinearLayout {
     private Spinner spinnerView;
     private ClearableEditText textInput;
     private PhoneNumberUtil phoneUtil;
-    private ArrayList<OnCountryChangeListener> countryChangeListeners;
+    private ArrayList<OnCountryChangedListener> countryChangeListeners;
     private ArrayList<OnValidEntryListener> validEntryListeners;
     private String formatedNumber;
     private boolean nextNumber;
@@ -175,11 +175,11 @@ public class PhoneInputView extends LinearLayout {
         return false;
     }
 
-    public void addOnCountryChangeListener(OnCountryChangeListener listener) {
+    public void addOnCountryChangeListener(OnCountryChangedListener listener) {
         countryChangeListeners.add(listener);
     }
 
-    public ArrayList<OnCountryChangeListener> getCountryChangeListeners() {
+    public ArrayList<OnCountryChangedListener> getCountryChangeListeners() {
         return countryChangeListeners;
     }
 
@@ -192,7 +192,7 @@ public class PhoneInputView extends LinearLayout {
     }
 
     private void triggerCountryChange(String country) {
-        for (OnCountryChangeListener l : countryChangeListeners)
+        for (OnCountryChangedListener l : countryChangeListeners)
             l.onCountryChange(country);
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.github.willena.phoneinputview.CountryConfigurator;
 import com.github.willena.phoneinputview.PhoneInputView;
 import com.github.willena.phoneinputview.events.OnValidEntryListener;
 
@@ -21,7 +22,16 @@ public class MainActivity extends AppCompatActivity {
 
         b = (Button)findViewById(R.id.button_validate);
 
+
         phoneView = (PhoneInputView) findViewById(R.id.phoneId);
+
+        CountryConfigurator config = new CountryConfigurator();
+        config.setDisplayFlag(true);
+        config.setDisplayCountryCode(true);
+        config.setDisplayDialingCode(true);
+
+        phoneView.setConfig(config);
+
         phoneView.addOnValidEntryListener(new OnValidEntryListener() {
             @Override
             public void onValidEntry(Boolean valid) {
