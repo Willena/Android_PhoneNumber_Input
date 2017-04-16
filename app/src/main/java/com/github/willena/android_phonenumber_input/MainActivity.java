@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         phoneView = (PhoneInputView) findViewById(R.id.phoneId);
 
         CountryConfigurator config = new CountryConfigurator();
-        config.setDisplayFlag(true);
+        config.setDisplayFlag(false);
         config.setDisplayCountryCode(true);
-        config.setDisplayDialingCode(true);
+        config.setDisplayDialingCode(false);
 
         phoneView.setConfig(config);
 

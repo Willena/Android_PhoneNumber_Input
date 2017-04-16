@@ -23,7 +23,7 @@ class SpinnerCountryArrayAdapter extends ArrayAdapter<CountryInfo> {
     private final PhoneNumberUtil phoneUtils;
 
     SpinnerCountryArrayAdapter(Context context, CountryConfigurator config, PhoneNumberUtil phoneUtil,
-                                      List<CountryInfo> objects) {
+                               List<CountryInfo> objects) {
         super(context, R.layout.phone_input_spinner_top_item, objects);
         this.phoneUtils = phoneUtil;
         this.config = config;
@@ -49,39 +49,48 @@ class SpinnerCountryArrayAdapter extends ArrayAdapter<CountryInfo> {
         TextView countryName = (TextView) row.findViewById(R.id.phone_input_spinner_item_country_name);
         TextView dialCode = (TextView) row.findViewById(R.id.phone_input_spinner_item_dialcode);
 
-        if (top)
-            countryName.setVisibility(View.GONE);
-        else{
+        if (!top) {
             countryName.setText(getItem(position).getName());
-        }
-
-        if (this.config.getDisplayCountryCode())
+            dialCode.setText("(+" + phoneUtils.getExampleNumber(getItem(position).getCode()).getCountryCode() + ")");
             countryCode.setText(getItem(position).getCode());
-        else
-            countryCode.setVisibility(View.GONE);
 
-        if (this.config.getDisplayFlag()) {
             Resources resources = row.getResources();
             int resourceId = resources.getIdentifier(getItem(position).getCode().toLowerCase() + "_", "drawable", row.getContext().getPackageName());
 
-
-            if (resourceId <= 0)
-                flag.setImageDrawable(null);
-            else
-                flag.setImageDrawable(resources.getDrawable(resourceId));
-        } else
-            flag.setVisibility(View.GONE);
+            flag.setImageDrawable((resourceId <= 0) ? null : resources.getDrawable(resourceId));
 
 
-        if (this.config.getDisplayDialingCode()) {
-            try {
-                dialCode.setText("(+" + phoneUtils.getExampleNumber(getItem(position).getCode()).getCountryCode() + ")");
-            } catch (Exception e) {
-                dialCode.setText("");
-
-            }
         } else {
-            dialCode.setVisibility(View.GONE);
+            countryName.setVisibility(View.GONE);
+
+            if (this.config.getDisplayCountryCode()) {
+                countryCode.setText(getItem(position).getCode());
+            } else {
+                countryCode.setVisibility(View.GONE);
+            }
+
+
+            if (this.config.getDisplayFlag()) {
+                Resources resources = row.getResources();
+                int resourceId = resources.getIdentifier(getItem(position).getCode().toLowerCase() + "_", "drawable", row.getContext().getPackageName());
+
+                flag.setImageDrawable((resourceId <= 0) ? null : resources.getDrawable(resourceId));
+
+            } else {
+                flag.setVisibility(View.GONE);
+            }
+
+
+            if (this.config.getDisplayDialingCode()) {
+                try {
+                    dialCode.setText("(+" + phoneUtils.getExampleNumber(getItem(position).getCode()).getCountryCode() + ")");
+                } catch (Exception e) {
+                    dialCode.setText("");
+                }
+            } else {
+                dialCode.setVisibility(View.GONE);
+            }
+
         }
 
         return row;
