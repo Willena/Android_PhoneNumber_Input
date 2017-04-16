@@ -20,6 +20,8 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class PhoneInputView extends LinearLayout {
@@ -33,12 +35,15 @@ public class PhoneInputView extends LinearLayout {
     private PhoneNumberUtil phoneUtil;
     private ArrayList<OnCountryChangedListener> countryChangeListeners;
     private ArrayList<OnValidEntryListener> validEntryListeners;
+    private List<String> countryCodeList;
     private String formatedNumber;
     private boolean nextNumber;
 
     {
         countryChangeListeners = new ArrayList<>();
         validEntryListeners = new ArrayList<>();
+        countryCodeList = Arrays.asList(getContext().getResources().getStringArray(R.array.countryCodes));
+
         init();
     }
 
@@ -84,13 +89,14 @@ public class PhoneInputView extends LinearLayout {
         if (this.config == null)
             this.config = new CountryConfigurator();
 
+
         phoneUtil = PhoneNumberUtil.getInstance();
         inflate(getContext(), R.layout.phone_input_view, this);
 
         this.spinnerView = (Spinner) findViewById(R.id.phone_input_country_spinner);
         this.textInput = (ClearableEditText) findViewById(R.id.phone_input_edit_text);
 
-        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(),this.config , phoneUtil, R.layout.phone_input_spinner_item, getContext().getResources().getStringArray(R.array.countryCodes)));
+        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryCodeList));
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -137,13 +143,13 @@ public class PhoneInputView extends LinearLayout {
 
     }
 
-    public CountryConfigurator getConfig(){
+    public CountryConfigurator getConfig() {
         return this.config;
     }
 
-    public void setConfig(CountryConfigurator c){
+    public void setConfig(CountryConfigurator c) {
         this.config = c;
-        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(),this.config, phoneUtil ,R.layout.phone_input_spinner_item, getContext().getResources().getStringArray(R.array.countryCodes)));
+        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryCodeList));
     }
 
     private String getFomatedNumberFromDigit(String onlydigit) {
@@ -217,5 +223,25 @@ public class PhoneInputView extends LinearLayout {
         }
     }
 
+    public void setPhoneNumber(String n, String country) {
+        int pos = countryCodeList.indexOf(country.toUpperCase());
+
+        if (pos > 0) {
+            spinnerView.setSelection(pos);
+            try {
+
+                Phonenumber.PhoneNumber proto = phoneUtil.parse(n, countryCodeList.get(pos));
+                if (phoneUtil.isValidNumber(proto)){
+                    textInput.setText("");
+                    for (char c : onlyDigit(n).toCharArray())
+                        textInput.append(""+c);
+                }
+
+            } catch (NumberParseException e) {
+                return;
+            }
+        }
+
+    }
 
 }

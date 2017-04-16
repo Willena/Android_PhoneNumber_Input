@@ -21,12 +21,20 @@ public class ClearableEditText extends android.support.v7.widget.AppCompatEditTe
 
     private ArrayList<TextWatcherAdapter.TextWatcherListener> onTextChangeListenners;
 
-    public static enum Location {
+    private Location loc = Location.RIGHT;
+
+    private Drawable xD;
+    private Listener listener;
+
+    private OnTouchListener l;
+    private OnFocusChangeListener f;
+
+    public enum Location {
         LEFT(0), RIGHT(2);
 
         final int idx;
 
-        private Location(int idx) {
+        Location(int idx) {
             this.idx = idx;
         }
     }
@@ -54,9 +62,6 @@ public class ClearableEditText extends android.support.v7.widget.AppCompatEditTe
         this.listener = listener;
     }
 
-    /**
-     * null disables the icon
-     */
     public void setIconLocation(Location loc) {
         this.loc = loc;
         initIcon();
@@ -72,13 +77,6 @@ public class ClearableEditText extends android.support.v7.widget.AppCompatEditTe
         this.f = f;
     }
 
-    private Location loc = Location.RIGHT;
-
-    private Drawable xD;
-    private Listener listener;
-
-    private OnTouchListener l;
-    private OnFocusChangeListener f;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -157,7 +155,6 @@ public class ClearableEditText extends android.support.v7.widget.AppCompatEditTe
             xD = getCompoundDrawables()[loc.idx];
         }
         if (xD == null) {
-//            xD = getResources().getDrawable(android.R.drawable.presence_offline);
             xD = getResources().getDrawable(R.drawable.ic_close_black_24dp);
         }
         xD.setBounds(0, 0, xD.getIntrinsicWidth(), xD.getIntrinsicHeight());

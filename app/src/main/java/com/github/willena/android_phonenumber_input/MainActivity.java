@@ -39,5 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MAINACTIVITY", "onValidEntry: " + phoneView.getFormatedNumber());
             }
         });
+
+        phoneView.setPhoneNumber("0100000000", "FR");
     }
 }

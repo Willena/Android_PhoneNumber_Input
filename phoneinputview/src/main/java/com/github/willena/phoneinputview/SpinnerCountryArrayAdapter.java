@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Guillaume on 23/02/2017.
  */
@@ -20,9 +23,9 @@ class SpinnerCountryArrayAdapter extends ArrayAdapter<String> {
     private final CountryConfigurator config;
     private final PhoneNumberUtil phoneUtils;
 
-    public SpinnerCountryArrayAdapter(Context context, CountryConfigurator config, PhoneNumberUtil phoneUtil, int textViewResourceId,
-                                      String[] objects) {
-        super(context, textViewResourceId, objects);
+    public SpinnerCountryArrayAdapter(Context context, CountryConfigurator config, PhoneNumberUtil phoneUtil,
+                                      List<String> objects) {
+        super(context, R.layout.phone_input_spinner_item, objects);
         this.phoneUtils = phoneUtil;
         this.config = config;
         //this.config.setDisplayCountryCode(false);
@@ -68,13 +71,12 @@ class SpinnerCountryArrayAdapter extends ArrayAdapter<String> {
 
         if (this.config.getDisplayDialingCode()) {
             try {
-                dialCode.setText("(+"+phoneUtils.getExampleNumber(getItem(position)).getCountryCode()+")");
+                dialCode.setText("(+" + phoneUtils.getExampleNumber(getItem(position)).getCountryCode() + ")");
             } catch (Exception e) {
                 dialCode.setText("");
 
             }
-        } else
-        {
+        } else {
             dialCode.setVisibility(View.GONE);
         }
 
