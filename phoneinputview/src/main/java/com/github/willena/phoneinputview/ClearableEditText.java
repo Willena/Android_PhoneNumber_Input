@@ -17,7 +17,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 
-public class ClearableEditText extends android.support.v7.widget.AppCompatEditText implements OnTouchListener, OnFocusChangeListener, TextWatcherAdapter.TextWatcherListener {
+class ClearableEditText extends android.support.v7.widget.AppCompatEditText implements OnTouchListener, OnFocusChangeListener, TextWatcherAdapter.TextWatcherListener {
 
     private ArrayList<TextWatcherAdapter.TextWatcherListener> onTextChangeListenners;
 

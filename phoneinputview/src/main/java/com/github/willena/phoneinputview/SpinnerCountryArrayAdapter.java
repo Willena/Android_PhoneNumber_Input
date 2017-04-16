@@ -11,54 +11,58 @@ import android.widget.TextView;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Guillaume on 23/02/2017.
  */
 
-class SpinnerCountryArrayAdapter extends ArrayAdapter<String> {
+class SpinnerCountryArrayAdapter extends ArrayAdapter<CountryInfo> {
 
     private final CountryConfigurator config;
     private final PhoneNumberUtil phoneUtils;
 
-    public SpinnerCountryArrayAdapter(Context context, CountryConfigurator config, PhoneNumberUtil phoneUtil,
-                                      List<String> objects) {
-        super(context, R.layout.phone_input_spinner_item, objects);
+    SpinnerCountryArrayAdapter(Context context, CountryConfigurator config, PhoneNumberUtil phoneUtil,
+                                      List<CountryInfo> objects) {
+        super(context, R.layout.phone_input_spinner_top_item, objects);
         this.phoneUtils = phoneUtil;
         this.config = config;
-        //this.config.setDisplayCountryCode(false);
-        //this.config.setDisplayFlag(false);
     }
 
     @Override
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position, convertView, parent, false);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position, convertView, parent, true);
     }
 
-    public View getCustomView(int position, View convertView, ViewGroup parent) {
+    public View getCustomView(int position, View convertView, ViewGroup parent, Boolean top) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View row = inflater.inflate(R.layout.phone_input_spinner_item, parent, false);
+        View row = inflater.inflate(R.layout.phone_input_spinner_top_item, parent, false);
 
         ImageView flag = (ImageView) row.findViewById(R.id.phone_input_spinner_item_flag);
-        TextView countryCode = (TextView) row.findViewById(R.id.phone_input_spinner_item_country);
+        TextView countryCode = (TextView) row.findViewById(R.id.phone_input_spinner_item_country_code);
+        TextView countryName = (TextView) row.findViewById(R.id.phone_input_spinner_item_country_name);
         TextView dialCode = (TextView) row.findViewById(R.id.phone_input_spinner_item_dialcode);
 
+        if (top)
+            countryName.setVisibility(View.GONE);
+        else{
+            countryName.setText(getItem(position).getName());
+        }
+
         if (this.config.getDisplayCountryCode())
-            countryCode.setText(getItem(position));
+            countryCode.setText(getItem(position).getCode());
         else
             countryCode.setVisibility(View.GONE);
 
         if (this.config.getDisplayFlag()) {
             Resources resources = row.getResources();
-            int resourceId = resources.getIdentifier(getItem(position).toLowerCase() + "_", "drawable", row.getContext().getPackageName());
+            int resourceId = resources.getIdentifier(getItem(position).getCode().toLowerCase() + "_", "drawable", row.getContext().getPackageName());
 
 
             if (resourceId <= 0)
@@ -71,7 +75,7 @@ class SpinnerCountryArrayAdapter extends ArrayAdapter<String> {
 
         if (this.config.getDisplayDialingCode()) {
             try {
-                dialCode.setText("(+" + phoneUtils.getExampleNumber(getItem(position)).getCountryCode() + ")");
+                dialCode.setText("(+" + phoneUtils.getExampleNumber(getItem(position).getCode()).getCountryCode() + ")");
             } catch (Exception e) {
                 dialCode.setText("");
 

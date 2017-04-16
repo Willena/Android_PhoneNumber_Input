@@ -20,7 +20,6 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,14 +34,14 @@ public class PhoneInputView extends LinearLayout {
     private PhoneNumberUtil phoneUtil;
     private ArrayList<OnCountryChangedListener> countryChangeListeners;
     private ArrayList<OnValidEntryListener> validEntryListeners;
-    private List<String> countryCodeList;
+    private List<CountryInfo> countryList;
     private String formatedNumber;
     private boolean nextNumber;
 
     {
         countryChangeListeners = new ArrayList<>();
         validEntryListeners = new ArrayList<>();
-        countryCodeList = Arrays.asList(getContext().getResources().getStringArray(R.array.countryCodes));
+        countryList = CountryInfo.fromArray(getContext().getResources().getStringArray(R.array.countryCodes));
 
         init();
     }
@@ -96,13 +95,13 @@ public class PhoneInputView extends LinearLayout {
         this.spinnerView = (Spinner) findViewById(R.id.phone_input_country_spinner);
         this.textInput = (ClearableEditText) findViewById(R.id.phone_input_edit_text);
 
-        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryCodeList));
+        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryList));
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String code = (String) spinnerView.getSelectedItem();
+                String code = ((CountryInfo) spinnerView.getSelectedItem()).getCode();
                 Log.d("PHONE_DIALOG", "onItemSelected: " + code);
-                textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType((String) spinnerView.getSelectedItem(), PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+                textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
                 textInput.setText(textInput.getText());
                 triggerCountryChange(code);
             }
@@ -149,12 +148,12 @@ public class PhoneInputView extends LinearLayout {
 
     public void setConfig(CountryConfigurator c) {
         this.config = c;
-        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryCodeList));
+        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryList));
     }
 
     private String getFomatedNumberFromDigit(String onlydigit) {
         String tmp = onlyDigit(onlydigit);
-        AsYouTypeFormatter formatter = phoneUtil.getAsYouTypeFormatter((String) spinnerView.getSelectedItem());
+        AsYouTypeFormatter formatter = phoneUtil.getAsYouTypeFormatter(((CountryInfo) spinnerView.getSelectedItem()).getCode());
         String number = "";
         for (char c : onlyDigit(tmp).toCharArray()) {
             number = formatter.inputDigit(c);
@@ -169,7 +168,7 @@ public class PhoneInputView extends LinearLayout {
     private Boolean isValid(String number) {
         Phonenumber.PhoneNumber phoneProto = null;
         try {
-            phoneProto = phoneUtil.parse(number, (String) spinnerView.getSelectedItem());
+            phoneProto = phoneUtil.parse(number, ((CountryInfo) spinnerView.getSelectedItem()).getCode());
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
             return false;
@@ -215,7 +214,7 @@ public class PhoneInputView extends LinearLayout {
     public String getFormatedNumber(PhoneNumberUtil.PhoneNumberFormat format) {
         Phonenumber.PhoneNumber phoneProto;
         try {
-            phoneProto = phoneUtil.parse(textInput.getText().toString(), (String) spinnerView.getSelectedItem());
+            phoneProto = phoneUtil.parse(textInput.getText().toString(), ((CountryInfo) spinnerView.getSelectedItem()).getCode());
             return phoneUtil.format(phoneProto, format);
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
@@ -224,13 +223,13 @@ public class PhoneInputView extends LinearLayout {
     }
 
     public void setPhoneNumber(String n, String country) {
-        int pos = countryCodeList.indexOf(country.toUpperCase());
+        int pos = CountryInfo.find("FR", countryList);
 
-        if (pos > 0) {
+        if (pos >= 0) {
             spinnerView.setSelection(pos);
             try {
 
-                Phonenumber.PhoneNumber proto = phoneUtil.parse(n, countryCodeList.get(pos));
+                Phonenumber.PhoneNumber proto = phoneUtil.parse(n, countryList.get(pos).getCode());
                 if (phoneUtil.isValidNumber(proto)){
                     textInput.setText("");
                     for (char c : onlyDigit(n).toCharArray())

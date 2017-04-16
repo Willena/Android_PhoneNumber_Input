@@ -7,7 +7,7 @@ import android.widget.EditText;
 /**
  * Created by Guillaume on 12/04/2017.
  */
-public class TextWatcherAdapter implements TextWatcher {
+class TextWatcherAdapter implements TextWatcher {
 
     public interface TextWatcherListener {
 

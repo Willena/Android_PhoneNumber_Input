@@ -14,14 +14,25 @@
         android:layout_marginLeft="5dp" />
 
     <TextView
-        android:id="@+id/phone_input_spinner_item_country"
+        android:id="@+id/phone_input_spinner_item_country_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="3dp"
         android:text="FR"
+        android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/phone_input_spinner_item_country_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="3dp"
+        android:text="France"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="wrap_content"
