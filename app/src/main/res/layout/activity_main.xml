@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.github.willena.android_phonenumber_input.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/hello3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/hello"/>
+        android:text="Default" />
 
     <com.github.willena.phoneinputview.PhoneInputView
-        android:layout_below="@+id/hello"
+        android:id="@+id/phoneId1"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/phoneId"/>
-    
+        android:layout_height="60dp">
+
+    </com.github.willena.phoneinputview.PhoneInputView>
+
+    <TextView
+        android:id="@+id/hello2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set number and code" />
+
+    <com.github.willena.phoneinputview.PhoneInputView
+        android:id="@+id/phoneId2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+    </com.github.willena.phoneinputview.PhoneInputView>
+
     <Button
+        android:id="@+id/button_validate2"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Validate"
-        android:layout_below="@+id/phoneId"
-        android:id="@+id/button_validate"
-        android:enabled="false"/>
-    
-</RelativeLayout>
+        android:enabled="false"
+        android:text="Validate" />
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Force Default country " />
+
+    <com.github.willena.phoneinputview.PhoneInputView
+        android:id="@+id/phoneId3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:id="@+id/hello4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Only flag and code in Spinner " />
+
+    <com.github.willena.phoneinputview.PhoneInputView
+        android:id="@+id/phoneId4"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+</LinearLayout>

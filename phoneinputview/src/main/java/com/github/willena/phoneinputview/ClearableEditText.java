@@ -1,8 +1,8 @@
 package com.github.willena.phoneinputview;
 
-/**
- * Created by Guillaume on 12/04/2017.
- * Based on : https://github.com/droidparts/droidparts/blob/develop/droidparts/src/org/droidparts/widget/ClearableEditText.java
+/*
+  Created by Guillaume on 12/04/2017.
+  Based on : https://github.com/droidparts/droidparts/blob/develop/droidparts/src/org/droidparts/widget/ClearableEditText.java
  */
 
 import android.content.Context;
@@ -17,9 +17,9 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 
-class ClearableEditText extends android.support.v7.widget.AppCompatEditText implements OnTouchListener, OnFocusChangeListener, TextWatcherAdapter.TextWatcherListener {
+class ClearableEditText extends androidx.appcompat.widget.AppCompatEditText implements OnTouchListener, OnFocusChangeListener, TextWatcherAdapter.TextWatcherListener {
 
-    private ArrayList<TextWatcherAdapter.TextWatcherListener> onTextChangeListenners;
+    private ArrayList<TextWatcherAdapter.TextWatcherListener> onTextChangeListeners;
 
     private Location loc = Location.RIGHT;
 
@@ -120,18 +120,18 @@ class ClearableEditText extends android.support.v7.widget.AppCompatEditText impl
             setClearIconVisible(isNotEmpty(text));
         }
 
-        for (TextWatcherAdapter.TextWatcherListener l : onTextChangeListenners)
+        for (TextWatcherAdapter.TextWatcherListener l : onTextChangeListeners)
         {
             l.onTextChanged(view, text);
         }
     }
 
     public void addOnTextChangedListenner(TextWatcherAdapter.TextWatcherListener l){
-        onTextChangeListenners.add(l);
+        onTextChangeListeners.add(l);
     }
 
     public void removeOnTextChangedListenner(TextWatcherAdapter.TextWatcherListener l){
-        onTextChangeListenners.remove(l);
+        onTextChangeListeners.remove(l);
     }
 
     @Override
@@ -146,7 +146,7 @@ class ClearableEditText extends android.support.v7.widget.AppCompatEditText impl
         addTextChangedListener(new TextWatcherAdapter(this, this));
         initIcon();
         setClearIconVisible(false);
-        onTextChangeListenners = new ArrayList<>();
+        onTextChangeListeners = new ArrayList<>();
     }
 
     private void initIcon() {

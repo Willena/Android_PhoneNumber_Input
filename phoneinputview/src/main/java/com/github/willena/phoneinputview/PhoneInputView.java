@@ -139,6 +139,8 @@ public class PhoneInputView extends LinearLayout {
 
         textInput.addOnTextChangedListenner(textChangedListener);
 
+        if (config.getDefaultCountry() != null)
+            setCountry(config.getDefaultCountry());
 
     }
 
@@ -149,6 +151,14 @@ public class PhoneInputView extends LinearLayout {
     public void setConfig(CountryConfigurator c) {
         this.config = c;
         spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryList));
+        if (config.getDefaultCountry() != null)
+            setCountry(config.getDefaultCountry());
+    }
+
+    public void setCountry(String code) {
+        int pos = CountryInfo.find(code, countryList);
+        if (pos >= 0)
+            spinnerView.setSelection(pos);
     }
 
     private String getFomatedNumberFromDigit(String onlydigit) {
@@ -175,7 +185,6 @@ public class PhoneInputView extends LinearLayout {
         }
         if (phoneProto != null)
             return phoneUtil.isValidNumber(phoneProto);
-
 
         return false;
     }
@@ -222,18 +231,22 @@ public class PhoneInputView extends LinearLayout {
         }
     }
 
+    public List<CountryInfo> getCountryList() {
+        return countryList;
+    }
+
     public void setPhoneNumber(String n, String country) {
-        int pos = CountryInfo.find("FR", countryList);
+        int pos = CountryInfo.find(country, countryList);
 
         if (pos >= 0) {
             spinnerView.setSelection(pos);
             try {
 
                 Phonenumber.PhoneNumber proto = phoneUtil.parse(n, countryList.get(pos).getCode());
-                if (phoneUtil.isValidNumber(proto)){
+                if (phoneUtil.isValidNumber(proto)) {
                     textInput.setText("");
                     for (char c : onlyDigit(n).toCharArray())
-                        textInput.append(""+c);
+                        textInput.append("" + c);
                 }
 
             } catch (NumberParseException e) {

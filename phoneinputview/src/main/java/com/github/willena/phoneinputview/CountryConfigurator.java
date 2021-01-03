@@ -9,11 +9,21 @@ public class CountryConfigurator {
     private Boolean displayFlag;
     private Boolean displayCountryCode;
     private Boolean displayDialingCode;
+    private String defaultCountry;
 
     public CountryConfigurator() {
         displayFlag = true;
         displayCountryCode = true;
         displayDialingCode = true;
+        defaultCountry = null;
+    }
+
+    public void setDefaultCountry(String defaultCode) {
+        this.defaultCountry = defaultCode;
+    }
+
+    public String getDefaultCountry() {
+        return defaultCountry;
     }
 
     public void setDisplayCountryCode(Boolean displayCountryCode) {
