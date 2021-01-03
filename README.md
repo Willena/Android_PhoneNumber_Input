@@ -56,6 +56,9 @@ There are some useful method such as :
   * INTERNATIONAL
   * NATIONAL
   * RFC3966
+- **setCountry** : this method the the country on the spinner
+- **setPhoneNumber** : this method sets the number and the country.
+- **getCountryList** : this method returns the list of availale country
 
 There are also some Listener to listen to allowing you to get information from the widget in real time such as:
 - **OnCountryChangedListener** : triggered when the user decide to change the country in the spinner, you can get the associated country code.
@@ -74,6 +77,7 @@ CountryConfigurator config = new CountryConfigurator();
 config.setDisplayFlag(true);
 config.setDisplayCountryCode(true);
 config.setDisplayDialingCode(true);
+config.setDefaultCountry("FR"); //Set the default country that will be selected when loading
 ``` 
 
 Settings can be aplied by using : ``` phoneView.setConfig(config); ```
