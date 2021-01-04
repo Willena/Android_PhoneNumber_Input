@@ -92,5 +92,3 @@ Any suggestions are welcome.
 This library may not be complete (some flags or country may be missing from the list). Feel free to fork this depos and add new features to this lib.
 If you have any questions, feel free to ask, I will be happy to answer them.
 
-If you find it useful you can make a small donation via Paypal. 
- - Paypal : https://www.paypal.me/GuillaumeVillena

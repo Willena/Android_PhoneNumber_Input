@@ -26,6 +26,7 @@ class SpinnerCountryArrayAdapter extends ArrayAdapter<CountryInfo> {
                                List<CountryInfo> objects) {
         super(context, R.layout.phone_input_spinner_top_item, objects);
         this.phoneUtils = phoneUtil;
+
         this.config = config;
     }
 
