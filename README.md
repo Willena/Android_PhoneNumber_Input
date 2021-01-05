@@ -29,9 +29,14 @@ Installation within android Studio is pretty easy, just add these lines to your 
 2. Add the dependency
 ```gradle
 	dependencies {
-	        compile 'com.github.Willena:Android_PhoneNumber_Input:1.0'
+	        implementation 'com.github.Willena:Android_PhoneNumber_Input:1.3'
 	}
 ```
+
+### Note about v1.3
+
+In order for v1.3 to work correctly you might have to add the module manually
+
 ## How to use
 
 The widget can be used in your .xml layout, here is an example :
