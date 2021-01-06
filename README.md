@@ -56,7 +56,8 @@ There are some useful method such as :
   * INTERNATIONAL
   * NATIONAL
   * RFC3966
-- **setCountry** : this method the the country on the spinner
+- **setCountry** : this method sets the country on the spinner
+- **setDisplayMobileHint** : this method sets the phone number type that will be displayed as hint
 - **setPhoneNumber** : this method sets the number and the country.
 - **getCountryList** : this method returns the list of availale country
 
@@ -77,6 +78,7 @@ CountryConfigurator config = new CountryConfigurator();
 config.setDisplayFlag(true);
 config.setDisplayCountryCode(true);
 config.setDisplayDialingCode(true);
+config.setDisplayMobileHint(true); //Set the phone number type that will be displayed as hint (set to true to display a mobile number as hint / set to true to display a fixed-line number as hint / set to null to hide the hint)
 config.setDefaultCountry("FR"); //Set the default country that will be selected when loading
 ``` 
 

@@ -9,21 +9,19 @@ public class CountryConfigurator {
     private Boolean displayFlag;
     private Boolean displayCountryCode;
     private Boolean displayDialingCode;
+	private Boolean displayMobileHint;
     private String defaultCountry;
 
     public CountryConfigurator() {
         displayFlag = true;
         displayCountryCode = true;
         displayDialingCode = true;
+		displayMobileHint = true;
         defaultCountry = null;
     }
 
     public void setDefaultCountry(String defaultCode) {
         this.defaultCountry = defaultCode;
-    }
-
-    public String getDefaultCountry() {
-        return defaultCountry;
     }
 
     public void setDisplayCountryCode(Boolean displayCountryCode) {
@@ -37,6 +35,10 @@ public class CountryConfigurator {
     public void setDisplayFlag(Boolean displayFlag) {
         this.displayFlag = displayFlag;
     }
+	
+	public void setDisplayMobileHint(Boolean displayMobileHint){
+		this.displayMobileHint = displayMobileHint;
+	}
 
     public Boolean getDisplayCountryCode() {
         return displayCountryCode;
@@ -48,5 +50,13 @@ public class CountryConfigurator {
 
     public Boolean getDisplayFlag() {
         return displayFlag;
+    }
+	
+	public Boolean getDisplayMobileHint() {
+		return displayMobileHint;
+	}
+	
+	public String getDefaultCountry() {
+        return defaultCountry;
     }
 }

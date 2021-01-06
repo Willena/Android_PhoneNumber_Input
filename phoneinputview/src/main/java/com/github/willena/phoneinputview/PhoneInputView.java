@@ -101,7 +101,15 @@ public class PhoneInputView extends LinearLayout {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String code = ((CountryInfo) spinnerView.getSelectedItem()).getCode();
                 Log.d("PHONE_DIALOG", "onItemSelected: " + code);
-                textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+                try {
+                    if (config.getDisplayMobileHint()){
+                        textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.MOBILE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+                    } else {
+                        textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.FIXED_LINE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+                    }
+                } catch (NullPointerException e){
+                    textInput.setHint(null);
+                }
                 textInput.setText(textInput.getText());
                 triggerCountryChange(code);
             }
