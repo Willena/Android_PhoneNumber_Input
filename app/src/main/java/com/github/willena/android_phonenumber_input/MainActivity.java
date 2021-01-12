@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         config.setDisplayFlag(true);
         config.setDisplayCountryCode(true);
         config.setDisplayDialingCode(false);
+        config.setPhoneNumberHintType(null);
 
         phoneView4.setConfig(config);
     }

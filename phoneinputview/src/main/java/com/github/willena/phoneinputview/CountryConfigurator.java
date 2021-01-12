@@ -6,17 +6,23 @@ package com.github.willena.phoneinputview;
 
 public class CountryConfigurator {
 
+    enum HintType {
+        MOBILE,
+        FIXED,
+        NONE
+    }
+
     private Boolean displayFlag;
     private Boolean displayCountryCode;
     private Boolean displayDialingCode;
-	private Boolean displayMobileHint;
+    private HintType phoneNumberHintType;
     private String defaultCountry;
 
     public CountryConfigurator() {
         displayFlag = true;
         displayCountryCode = true;
         displayDialingCode = true;
-		displayMobileHint = true;
+        phoneNumberHintType = HintType.MOBILE;
         defaultCountry = null;
     }
 
@@ -35,10 +41,13 @@ public class CountryConfigurator {
     public void setDisplayFlag(Boolean displayFlag) {
         this.displayFlag = displayFlag;
     }
-	
-	public void setDisplayMobileHint(Boolean displayMobileHint){
-		this.displayMobileHint = displayMobileHint;
-	}
+
+    public void setPhoneNumberHintType(HintType hint) {
+        if (hint == null)
+            this.phoneNumberHintType = HintType.NONE;
+        else
+            this.phoneNumberHintType = hint;
+    }
 
     public Boolean getDisplayCountryCode() {
         return displayCountryCode;
@@ -51,12 +60,12 @@ public class CountryConfigurator {
     public Boolean getDisplayFlag() {
         return displayFlag;
     }
-	
-	public Boolean getDisplayMobileHint() {
-		return displayMobileHint;
-	}
-	
-	public String getDefaultCountry() {
+
+    public HintType getPhoneNumberHintType() {
+        return phoneNumberHintType;
+    }
+
+    public String getDefaultCountry() {
         return defaultCountry;
     }
 }

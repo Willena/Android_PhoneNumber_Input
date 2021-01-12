@@ -101,15 +101,14 @@ public class PhoneInputView extends LinearLayout {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String code = ((CountryInfo) spinnerView.getSelectedItem()).getCode();
                 Log.d("PHONE_DIALOG", "onItemSelected: " + code);
-                try {
-                    if (config.getDisplayMobileHint()){
-                        textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.MOBILE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
-                    } else {
-                        textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.FIXED_LINE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
-                    }
-                } catch (NullPointerException e){
+                if (config.getPhoneNumberHintType() == CountryConfigurator.HintType.MOBILE) {
+                    textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.MOBILE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+                } else if (config.getPhoneNumberHintType() == CountryConfigurator.HintType.FIXED) {
+                    textInput.setHint(phoneUtil.format(phoneUtil.getExampleNumberForType(((CountryInfo) spinnerView.getSelectedItem()).getCode(), PhoneNumberUtil.PhoneNumberType.FIXED_LINE), PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+                } else {
                     textInput.setHint(null);
                 }
+
                 textInput.setText(textInput.getText());
                 triggerCountryChange(code);
             }
@@ -143,11 +142,14 @@ public class PhoneInputView extends LinearLayout {
 
                 textInput.addOnTextChangedListenner(textChangedListener);
             }
-        };
+        }
+
+        ;
 
         textInput.addOnTextChangedListenner(textChangedListener);
 
         if (config.getDefaultCountry() != null)
+
             setCountry(config.getDefaultCountry());
 
     }

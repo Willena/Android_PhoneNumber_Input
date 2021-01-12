@@ -78,7 +78,7 @@ CountryConfigurator config = new CountryConfigurator();
 config.setDisplayFlag(true);
 config.setDisplayCountryCode(true);
 config.setDisplayDialingCode(true);
-config.setDisplayMobileHint(true); //Set the phone number type that will be displayed as hint (set to true to display a mobile number as hint / set to true to display a fixed-line number as hint / set to null to hide the hint)
+config.setPhoneNumberHintType(MOBILE); //Set the phone number type that will be displayed as hint (MOBILE, FIXED, NONE)
 config.setDefaultCountry("FR"); //Set the default country that will be selected when loading
 ``` 
 
