@@ -14,7 +14,7 @@ Thanks to the more low level google's phonenumber library (https://github.com/go
 
 ## How to install
 
-This library is made for android from API 15 to API 25 (and probably more in the future ).
+This library is made for android from API 15 to API 29 (and probably more in the future ).
 Installation within android Studio is pretty easy, just add these lines to your gradle dependencies.
 
 1. Add this in your root build.gradle at the end of repositories:
@@ -29,7 +29,7 @@ Installation within android Studio is pretty easy, just add these lines to your 
 2. Add the dependency
 ```gradle
 	dependencies {
-	        compile 'com.github.Willena:Android_PhoneNumber_Input:1.0'
+	        compile 'com.github.Willena:Android_PhoneNumber_Input:1.3.1'
 	}
 ```
 ## How to use

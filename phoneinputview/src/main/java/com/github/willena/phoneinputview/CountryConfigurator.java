@@ -6,7 +6,7 @@ package com.github.willena.phoneinputview;
 
 public class CountryConfigurator {
 
-    enum HintType {
+    public enum HintType {
         MOBILE,
         FIXED,
         NONE
