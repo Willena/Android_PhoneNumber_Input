@@ -29,7 +29,7 @@ Installation within android Studio is pretty easy, just add these lines to your 
 2. Add the dependency
 ```gradle
 	dependencies {
-	        compile 'com.github.Willena:Android_PhoneNumber_Input:1.3.1'
+	        compile 'com.github.Willena:Android_PhoneNumber_Input:1.3.2'
 	}
 ```
 ## How to use
