@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="countryCodes" >
+
+        <item>Российская федерация|RU</item>
+        <item>Украина|UA</item>
+        <item>United States of America|US</item>
+    </string-array>
+</resources>

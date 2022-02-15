@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MAINACTIVITY", "onValidEntry: " + phoneView1.getFormatedNumber());
             }
         });
-        phoneView1.setPhoneNumber("0102030405", "FR");
+        phoneView1.setPhoneNumber("5554433", "RU");
 
+        String[] countryCodes = getResources().getStringArray(R.array.countryCodes);
+        phoneView1.setCountriesArray(countryCodes);
 
         //Define default country value
         phoneView2 = (PhoneInputView) findViewById(R.id.phoneId3);

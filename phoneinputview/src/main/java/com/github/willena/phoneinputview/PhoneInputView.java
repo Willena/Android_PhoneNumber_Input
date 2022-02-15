@@ -171,6 +171,19 @@ public class PhoneInputView extends LinearLayout {
             spinnerView.setSelection(pos);
     }
 
+    /**
+     *
+     * @param countryCodes Contry_name|Code
+     *                     ex. United States of America|US
+     */
+    public void setCountriesArray(String[] countryCodes){
+        countryChangeListeners = new ArrayList<>();
+        validEntryListeners = new ArrayList<>();
+        countryList = CountryInfo.fromArray(countryCodes);
+
+        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryList));
+    }
+
     private String getFomatedNumberFromDigit(String onlydigit) {
         String tmp = onlyDigit(onlydigit);
         AsYouTypeFormatter formatter = phoneUtil.getAsYouTypeFormatter(((CountryInfo) spinnerView.getSelectedItem()).getCode());
