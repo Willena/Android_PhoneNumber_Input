@@ -1,10 +1,15 @@
 package com.github.willena.phoneinputview;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Guillaume on 15/04/2017.
  */
 
 public class CountryConfigurator {
+
 
     public enum HintType {
         MOBILE,
@@ -17,6 +22,7 @@ public class CountryConfigurator {
     private Boolean displayDialingCode;
     private HintType phoneNumberHintType;
     private String defaultCountry;
+    private List<String> countryWhitelist;
 
     public CountryConfigurator() {
         displayFlag = true;
@@ -24,6 +30,7 @@ public class CountryConfigurator {
         displayDialingCode = true;
         phoneNumberHintType = HintType.MOBILE;
         defaultCountry = null;
+        countryWhitelist = new ArrayList<>(0);
     }
 
     public void setDefaultCountry(String defaultCode) {
@@ -67,5 +74,20 @@ public class CountryConfigurator {
 
     public String getDefaultCountry() {
         return defaultCountry;
+    }
+
+    public List<String> getCountryWhitelist() {
+        return countryWhitelist;
+    }
+
+    /**
+     * @param countryWhitelist list of 2 let names
+     */
+    public void setCountryWhitelist(String... countryWhitelist) {
+        this.countryWhitelist = Arrays.asList(countryWhitelist);
+    }
+
+    public void setCountryWhitelist(List<String> countryWhitelist) {
+        this.countryWhitelist = countryWhitelist;
     }
 }

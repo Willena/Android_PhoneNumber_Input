@@ -38,11 +38,13 @@ public class PhoneInputView extends LinearLayout {
     private String formatedNumber;
     private boolean nextNumber;
 
+    private final List<CountryInfo> defaultCountryList;
+
     {
         countryChangeListeners = new ArrayList<>();
         validEntryListeners = new ArrayList<>();
-        countryList = CountryInfo.fromArray(getContext().getResources().getStringArray(R.array.countryCodes));
-
+        countryList = new ArrayList<>(0);
+        defaultCountryList = CountryInfo.fromArray(getContext().getResources().getStringArray(R.array.countryCodes));
         init();
     }
 
@@ -85,17 +87,13 @@ public class PhoneInputView extends LinearLayout {
     }
 
     private void init() {
-        if (this.config == null)
-            this.config = new CountryConfigurator();
-
 
         phoneUtil = PhoneNumberUtil.getInstance();
+
         inflate(getContext(), R.layout.phone_input_view, this);
+        this.spinnerView = findViewById(R.id.phone_input_country_spinner);
+        this.textInput = findViewById(R.id.phone_input_edit_text);
 
-        this.spinnerView = (Spinner) findViewById(R.id.phone_input_country_spinner);
-        this.textInput = (ClearableEditText) findViewById(R.id.phone_input_edit_text);
-
-        spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryList));
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -119,37 +117,33 @@ public class PhoneInputView extends LinearLayout {
             }
         });
 
-        textChangedListener = new TextWatcherAdapter.TextWatcherListener() {
-            @Override
-            public void onTextChanged(EditText view, String text) {
-                textInput.removeOnTextChangedListenner(textChangedListener);
+        setConfig(this.config);
 
-                Log.d(TAG, "onTextChanged: the new text is : " + text);
 
-                String number = getFomatedNumberFromDigit(text);
+        textChangedListener = (view, text) -> {
+            textInput.removeOnTextChangedListenner(textChangedListener);
 
-                Log.d("NUMBER", "afterTextChanged: " + number);
+            Log.d(TAG, "onTextChanged: the new text is : " + text);
 
-                textInput.setText("");
-                textInput.append(number);
+            String number = getFomatedNumberFromDigit(text);
 
-                boolean validity = isValid(textInput.getText().toString());
-                triggerValidEntry(validity);
-                if (validity)
-                    textInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(text.length())});
-                else
-                    textInput.setFilters(new InputFilter[]{});
+            Log.d("NUMBER", "afterTextChanged: " + number);
 
-                textInput.addOnTextChangedListenner(textChangedListener);
-            }
-        }
+            textInput.setText("");
+            textInput.append(number);
 
-        ;
+            boolean validity = isValid(textInput.getText().toString());
+            triggerValidEntry(validity);
+            if (validity)
+                textInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(text.length())});
+            else
+                textInput.setFilters(new InputFilter[]{});
 
+            textInput.addOnTextChangedListenner(textChangedListener);
+        };
         textInput.addOnTextChangedListenner(textChangedListener);
 
         if (config.getDefaultCountry() != null)
-
             setCountry(config.getDefaultCountry());
 
     }
@@ -160,6 +154,24 @@ public class PhoneInputView extends LinearLayout {
 
     public void setConfig(CountryConfigurator c) {
         this.config = c;
+        if (this.config == null)
+            this.config = new CountryConfigurator();
+
+        // Set to only a short list of country.
+        if (this.config.getCountryWhitelist().size() > 0) {
+            // To keep compat with older version.
+            // Also writable as stream instead...
+            countryList.clear();
+            countryList = new ArrayList<>(defaultCountryList.size());
+            for (CountryInfo instance : defaultCountryList) {
+                if (this.config.getCountryWhitelist().contains(instance.getCode())) {
+                    countryList.add(instance);
+                }
+            }
+        } else {
+            countryList.addAll(defaultCountryList);
+        }
+
         spinnerView.setAdapter(new SpinnerCountryArrayAdapter(getContext(), this.config, phoneUtil, countryList));
         if (config.getDefaultCountry() != null)
             setCountry(config.getDefaultCountry());
@@ -186,11 +198,11 @@ public class PhoneInputView extends LinearLayout {
     }
 
     private Boolean isValid(String number) {
-        Phonenumber.PhoneNumber phoneProto = null;
+        Phonenumber.PhoneNumber phoneProto;
         try {
             phoneProto = phoneUtil.parse(number, ((CountryInfo) spinnerView.getSelectedItem()).getCode());
         } catch (NumberParseException e) {
-            System.err.println("NumberParseException was thrown: " + e.toString());
+            System.err.println("NumberParseException was thrown: " + e);
             return false;
         }
         if (phoneProto != null)
@@ -236,7 +248,7 @@ public class PhoneInputView extends LinearLayout {
             phoneProto = phoneUtil.parse(textInput.getText().toString(), ((CountryInfo) spinnerView.getSelectedItem()).getCode());
             return phoneUtil.format(phoneProto, format);
         } catch (NumberParseException e) {
-            System.err.println("NumberParseException was thrown: " + e.toString());
+            System.err.println("NumberParseException was thrown: " + e);
             return null;
         }
     }
@@ -259,8 +271,7 @@ public class PhoneInputView extends LinearLayout {
                         textInput.append("" + c);
                 }
 
-            } catch (NumberParseException e) {
-                return;
+            } catch (NumberParseException ignored) {
             }
         }
 
