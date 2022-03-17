@@ -66,4 +66,16 @@
         android:layout_width="match_parent"
         android:layout_height="60dp" />
 
+
+    <TextView
+        android:id="@+id/hello5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Whitelisted countries" />
+
+    <com.github.willena.phoneinputview.PhoneInputView
+        android:id="@+id/phoneId5"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
 </LinearLayout>
